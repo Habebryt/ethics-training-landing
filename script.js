@@ -51,13 +51,11 @@ states.forEach((state) => {
 function getAmount() {
   const today = new Date();
   const deadline = new Date("2025-08-15T23:59:59");
-  // 30000 Naira = 3,000,000 kobo, 50000 Naira = 5,000,000 kobo
   return today <= deadline ? 3000000 : 5000000;
 }
 
-document
-  .getElementById("registrationForm")
-  .addEventListener("submit", function (e) {
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("registrationForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
     const name = document.getElementById("name").value;
@@ -76,68 +74,48 @@ document
       currency: "NGN",
       ref: "YAS-" + Math.floor(Math.random() * 1000000000 + 1),
       callback: function (response) {
-        const data = {
-          name,
-          phone,
-          email,
-          state,
-          occupation,
-          qualification,
-          purpose,
-          amount: amount / 100,
-          reference: response.reference,
-          payment_date: new Date().toISOString(),
-        };
+        const params = new URLSearchParams();
+        params.append("name", name);
+        params.append("phone", phone);
+        params.append("email", email);
+        params.append("state", state);
+        params.append("occupation", occupation);
+        params.append("qualification", qualification);
+        params.append("purpose", purpose);
+        params.append("amount", amount / 100);
+        params.append("reference", response.reference);
+        params.append("payment_date", new Date().toISOString());
 
-        fetch(
-          "https://script.google.com/macros/s/AKfycbympXhxMJ9VrQD-fjtIVwdO7m5WC3reWJjLXe_y_3FI9r4oCR2yvn3POvQRJHG5VUv2JQ/exec",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          }
-        )
-          .then((res) => res.json())
+        fetch("https://script.google.com/macros/s/AKfycbympXhxMJ9VrQD-fjtIVwdO7m5WC3reWJjLXe_y_3FI9r4oCR2yvn3POvQRJHG5VUv2JQ/exec", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: params.toString()
+        })
+          .then(res => res.text())
           .then(() => {
-            // Show flashscreen
             const flashscreen = document.getElementById("flashscreen");
             flashscreen.classList.remove("d-none");
-            about-program.classList.remove("d-none");
-
-            // Scroll smoothly to About Program section
-            document
-              .getElementById("about-program")
-              .scrollIntoView({ behavior: "smooth" });
-
-            // Disable the form inputs while flashscreen shows
-            document
-              .getElementById("registrationForm")
-              .querySelectorAll("input, select, button")
-              .forEach((el) => (el.disabled = true));
+            document.getElementById("about-program").classList.remove("d-none");
+            document.getElementById("about-program").scrollIntoView({ behavior: "smooth" });
+            document.getElementById("registrationForm").reset();
           })
           .catch((err) => alert("Error saving data: " + err));
       },
       onClose: function () {
         alert("Payment window closed.");
-      },
+      }
     });
 
     handler.openIframe();
   });
 
-// Close flashscreen and reset form on clicking the Continue button
-document
-  .getElementById("flashscreen-close")
-  .addEventListener("click", () => {
-    const flashscreen = document.getElementById("flashscreen");
-    flashscreen.classList.add("d-none");
-
-    // Enable form inputs again
-    document
-      .getElementById("registrationForm")
-      .querySelectorAll("input, select, button")
-      .forEach((el) => (el.disabled = false));
-
-    // Reset the form
-    document.getElementById("registrationForm").reset();
-  });
+  const flashscreenClose = document.getElementById("flashscreen-close");
+  if (flashscreenClose) {
+    flashscreenClose.addEventListener("click", () => {
+      document.getElementById("flashscreen").classList.add("d-none");
+      document.getElementById("registrationForm").reset();
+    });
+  }
+});
