@@ -66,42 +66,42 @@ document.addEventListener("DOMContentLoaded", function () {
     const qualification = document.getElementById("qualification").value;
     const purpose = document.getElementById("purpose").value;
     const amount = getAmount();
+    const reference = "YAS-" + Math.floor(Math.random() * 1000000000 + 1);
+    const payment_date = new Date().toISOString();
+
+    // Submit to Google Sheet immediately (before payment)
+    const params = new URLSearchParams();
+    params.append("name", name);
+    params.append("phone", phone);
+    params.append("email", email);
+    params.append("state", state);
+    params.append("occupation", occupation);
+    params.append("qualification", qualification);
+    params.append("purpose", purpose);
+    params.append("amount", amount / 100);
+    params.append("reference", reference);
+    params.append("payment_date", payment_date);
+
+    fetch("https://script.google.com/macros/s/AKfycbympXhxMJ9VrQD-fjtIVwdO7m5WC3reWJjLXe_y_3FI9r4oCR2yvn3POvQRJHG5VUv2JQ/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: params.toString()
+    }).catch((err) => console.error("Data insert failed:", err));
 
     const handler = PaystackPop.setup({
       key: "pk_test_44b1466e12f99db2cbb42d161c1cd0861462c930",
       email: email,
       amount: amount,
       currency: "NGN",
-      ref: "YAS-" + Math.floor(Math.random() * 1000000000 + 1),
-      callback: function (response) {
-        const params = new URLSearchParams();
-        params.append("name", name);
-        params.append("phone", phone);
-        params.append("email", email);
-        params.append("state", state);
-        params.append("occupation", occupation);
-        params.append("qualification", qualification);
-        params.append("purpose", purpose);
-        params.append("amount", amount / 100);
-        params.append("reference", response.reference);
-        params.append("payment_date", new Date().toISOString());
-
-        fetch("https://script.google.com/macros/s/AKfycbympXhxMJ9VrQD-fjtIVwdO7m5WC3reWJjLXe_y_3FI9r4oCR2yvn3POvQRJHG5VUv2JQ/exec", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: params.toString()
-        })
-          .then(res => res.text())
-          .then(() => {
-            const flashscreen = document.getElementById("flashscreen");
-            flashscreen.classList.remove("d-none");
-            document.getElementById("about-program").classList.remove("d-none");
-            document.getElementById("about-program").scrollIntoView({ behavior: "smooth" });
-            document.getElementById("registrationForm").reset();
-          })
-          .catch((err) => alert("Error saving data: " + err));
+      ref: reference,
+      callback: function () {
+        const flashscreen = document.getElementById("flashscreen");
+        flashscreen.classList.remove("d-none");
+        document.getElementById("about-program").classList.remove("d-none");
+        document.getElementById("about-program").scrollIntoView({ behavior: "smooth" });
+        document.getElementById("registrationForm").reset();
       },
       onClose: function () {
         alert("Payment window closed.");
