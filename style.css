@@ -14,6 +14,10 @@ body {
   margin-bottom: 1.5rem;
 }
 
+textarea {
+  resize: none;
+}
+
 
 #about-program {
   background-color: #f8f9fa;

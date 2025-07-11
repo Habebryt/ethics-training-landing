@@ -55,61 +55,90 @@ function getAmount() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("registrationForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+  document
+    .getElementById("registrationForm")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const email = document.getElementById("email").value;
-    const state = document.getElementById("state").value;
-    const occupation = document.getElementById("occupation").value;
-    const qualification = document.getElementById("qualification").value;
-    const purpose = document.getElementById("purpose").value;
-    const amount = getAmount();
-    const reference = "YAS-" + Math.floor(Math.random() * 1000000000 + 1);
-    const payment_date = new Date().toISOString();
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const email = document.getElementById("email").value;
+      const state = document.getElementById("state").value;
+      const occupation = document.getElementById("occupation").value;
+      const qualification = document.getElementById("qualification").value;
+      const purpose = document.getElementById("purpose").value;
+      const amount = getAmount();
+      const reference = "YAS-" + Math.floor(Math.random() * 1000000000 + 1);
+      const payment_date = new Date().toISOString();
 
-    // Submit to Google Sheet immediately (before payment)
-    const params = new URLSearchParams();
-    params.append("name", name);
-    params.append("phone", phone);
-    params.append("email", email);
-    params.append("state", state);
-    params.append("occupation", occupation);
-    params.append("qualification", qualification);
-    params.append("purpose", purpose);
-    params.append("amount", amount / 100);
-    params.append("reference", reference);
-    params.append("payment_date", payment_date);
+      // Submit to Google Sheet immediately (before payment)
+      const params = new URLSearchParams();
+      params.append("name", name);
+      params.append("phone", phone);
+      params.append("email", email);
+      params.append("state", state);
+      params.append("occupation", occupation);
+      params.append("qualification", qualification);
+      params.append("purpose", purpose);
+      params.append("amount", amount / 100);
+      params.append("reference", reference);
+      params.append("payment_date", payment_date);
 
-    fetch("https://script.google.com/macros/s/AKfycbympXhxMJ9VrQD-fjtIVwdO7m5WC3reWJjLXe_y_3FI9r4oCR2yvn3POvQRJHG5VUv2JQ/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: params.toString()
-    }).catch((err) => console.error("Data insert failed:", err));
+      fetch(
+        "https://script.google.com/macros/s/AKfycbympXhxMJ9VrQD-fjtIVwdO7m5WC3reWJjLXe_y_3FI9r4oCR2yvn3POvQRJHG5VUv2JQ/exec",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: params.toString(),
+        }
+      ).catch((err) => console.error("Data insert failed:", err));
 
-    const handler = PaystackPop.setup({
-      key: "pk_test_44b1466e12f99db2cbb42d161c1cd0861462c930",
-      email: email,
-      amount: amount,
-      currency: "NGN",
-      ref: reference,
-      callback: function () {
-        const flashscreen = document.getElementById("flashscreen");
-        flashscreen.classList.remove("d-none");
-        document.getElementById("about-program").classList.remove("d-none");
-        document.getElementById("about-program").scrollIntoView({ behavior: "smooth" });
-        document.getElementById("registrationForm").reset();
-      },
-      onClose: function () {
-        alert("Payment window closed.");
-      }
+      const handler = PaystackPop.setup({
+        key: "pk_live_0a90c333370ff5364c0617edaf31fc6cc23062ea",
+        email: email,
+        amount: amount,
+        currency: "NGN",
+        ref: reference,
+        callback: function () {
+          const expectations = document.getElementById("expectations").value;
+
+          emailjs
+            .send("service_jku9etf", "template_mky3b2b", {
+              name,
+              phone,
+              email,
+              state,
+              occupation,
+              qualification,
+              purpose,
+              expectations,
+              amount: amount / 100,
+              reference,
+            })
+            .then(() => {
+              const flashscreen = document.getElementById("flashscreen");
+              flashscreen.classList.remove("d-none");
+              document
+                .getElementById("about-program")
+                .classList.remove("d-none");
+              document
+                .getElementById("about-program")
+                .scrollIntoView({ behavior: "smooth" });
+              document.getElementById("registrationForm").reset();
+            })
+            .catch((error) => {
+              console.error("EmailJS Error:", error);
+            });
+        },
+        onClose: function () {
+          alert("Payment window closed.");
+        },
+      });
+
+      handler.openIframe();
     });
-
-    handler.openIframe();
-  });
 
   const flashscreenClose = document.getElementById("flashscreen-close");
   if (flashscreenClose) {

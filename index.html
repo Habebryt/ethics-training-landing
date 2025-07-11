@@ -51,8 +51,11 @@
               <option>Self Development</option>
               <option>Employment</option>
               <option>Supervision/Management</option>
-              <option>Expectations</option>
             </select>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label class="form-label">Expectations</label>
+            <textarea name="expectations" class="form-control" id="expectations" cols="30" rows="4"></textarea>
           </div>
         </div>
         <button type="submit" class="btn btn-success w-100">Register & Pay</button>
@@ -91,5 +94,12 @@
   </div>
   <button id="flashscreen-close" style="padding: 0.75rem 2rem; font-size:1.25rem; cursor:pointer;">Continue</button>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init("YjKxsPQhrZu1z_aHT");
+  })();
+</script>
 </body>
 </html>
