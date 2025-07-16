@@ -100,7 +100,7 @@ if (registrationForm) {
         const qualification = document.getElementById("qualification").value;
         const purpose = document.getElementById("purpose").value;
         const expectations = document.getElementById("expectations").value;
-        const amount = 15000;
+        const amount = 10000;
 
         let handler = PaystackPop.setup({
             key: "pk_live_0a90c333370ff5364c0617edaf31fc6cc23062ea", // Your Paystack Public Key
