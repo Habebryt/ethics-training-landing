@@ -1,105 +1,205 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Workplace Integrity & Ethics Academy</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workplace Integrity & Ethics Academy - YAS Nigeria</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="container mt-5">
-    <div class="text-center mb-4">
-      <img src="https://yasnigeria.org.ng/wp-content/uploads/2020/05/FINAL-LOGO.png" alt="YAS Nigeria Logo" style="height: 80px;">
-      <h1 class="mt-3">Mastering Workplace Integrity & Ethics</h1>
-      <p>Register for the 2-day intensive training</p>
-    </div>
+<body class="bg-light">
 
-    <div class="form-container">
-      <form id="registrationForm">
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Full Name</label>
-            <input type="text" class="form-control" id="name" required>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Phone Number</label>
-            <input type="tel" class="form-control" id="phone" required>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Email Address</label>
-            <input type="email" class="form-control" id="email" required>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label">State of Residence</label>
-            <select class="form-select" id="state" required></select>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Occupation</label>
-            <input type="text" class="form-control" id="occupation" required>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Highest Qualification</label>
-            <input type="text" class="form-control" id="qualification" required>
-          </div>
-          <div class="col-md-12 mb-3">
-            <label class="form-label">Purpose of Participation</label>
-            <select class="form-select" id="purpose" required>
-              <option value="">Select Purpose</option>
-              <option>Career Upgrade</option>
-              <option>Self Development</option>
-              <option>Employment</option>
-              <option>Supervision/Management</option>
-            </select>
-          </div>
-          <div class="col-md-12 mb-3">
-            <label class="form-label">Expectations</label>
-            <textarea name="expectations" class="form-control" id="expectations" cols="30" rows="4"></textarea>
-          </div>
+    <!-- Header & Navigation -->
+    <header class="bg-success shadow-sm sticky-top">
+        <nav class="container navbar navbar-expand-md navbar-dark">
+            <a class="navbar-brand page-link" href="#home">
+                <img src="https://yasnigeria.org.ng/wp-content/uploads/2020/05/FINAL-LOGO.png" alt="YAS Nigeria Logo" style="height: 48px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mobile-menu">
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="nav-item"><a href="#home" class="nav-link page-link text-white">Home</a></li>
+                    <li class="nav-item"><a href="#overview" class="nav-link page-link text-white">Program Overview</a></li>
+                    <li class="nav-item"><a href="#register" class="nav-link page-link text-white">Register</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <!-- Home Page Content -->
+        <div id="home" class="page-content">
+            <!-- Hero Section -->
+            <section class="hero-section text-white py-5">
+                <div class="container text-center">
+                    <h1 class="display-4 fw-bold mb-4">Mastering Workplace Integrity & Ethics</h1>
+                    <p class="lead mb-4">A 2-day intensive online training to elevate your career.</p>
+                    <a href="#register" class="btn btn-light btn-lg page-link">Register Now</a>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section class="py-5 bg-white">
+                <div class="container">
+                    <h2 class="section-title">About the Program</h2>
+                    <p class="text-center text-muted col-lg-8 mx-auto mb-4">
+                        <strong>Mastering Workplace Integrity and Ethics for Career Advancement</strong> is an interactive online course designed to equip young professionals, recent graduates, and mid-career individuals with practical skills to demonstrate integrity and ethical behavior in Nigeria's workplace. Enhance your employability, build your reputation, and prepare for career advancement.
+                    </p>
+                    <div class="text-center">
+                         <a href="#overview" class="text-success fw-semibold page-link">Learn More About the Curriculum &rarr;</a>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Why Attend Section -->
+            <section class="py-5">
+                <div class="container">
+                    <h2 class="section-title">Why You Should Attend</h2>
+                    <div class="row g-4 text-center">
+                        <div class="col-md-4">
+                            <div class="card h-100 p-3">
+                                <h3 class="h5 fw-bold mb-2 text-success">For Job Seekers</h3>
+                                <p class="text-muted">Gain a competitive edge in Nigeria's job market by mastering ethical decision-making and articulating integrity.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 p-3">
+                                <h3 class="h5 fw-bold mb-2 text-success">For Career Advancers</h3>
+                                <p class="text-muted">Enhance workplace trust and open doors to career growth by building a reputation for integrity and professionalism.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 p-3">
+                                <h3 class="h5 fw-bold mb-2 text-success">For Global Professionals</h3>
+                                <p class="text-muted">Align with global workplace standards and demonstrate ethical competence for opportunities abroad.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        <button type="submit" class="btn btn-success w-100">Register</button>
-      </form>
+
+        <!-- Detailed Overview Page Content -->
+        <div id="overview" class="page-content d-none">
+            <section class="py-5 bg-white">
+                <div class="container">
+                    <h2 class="section-title">Program Detailed Overview</h2>
+                    <div class="col-lg-10 mx-auto bg-white p-4 p-md-5 rounded shadow-sm">
+                        <p class="text-muted mb-4">The <strong>Mastering Workplace Integrity and Ethics for Career Advancement</strong> program is a 4-hour online workshop designed to equip Nigerian professionals and job seekers with the knowledge and skills to uphold integrity and ethical standards in the workplace.</p>
+                        <div class="row g-5 mb-4">
+                            <div class="col-md-6">
+                                <h4 class="fw-bold h5 text-success mb-3">Program Structure</h4>
+                                <ul class="list-unstyled text-muted space-y-2">
+                                    <li><strong>Duration:</strong> 2 days, 2 hours per day (4 hours total)</li>
+                                    <li><strong>Format:</strong> Online workshop via Zoom/Google Meet</li>
+                                    <li><strong>Methodology:</strong> Interactive lectures, group discussions, and scenario analyses</li>
+                                    <li><strong>Trainers:</strong> Experts from anti-corruption agencies and CSOs</li>
+                                </ul>
+                            </div>
+                             <div class="col-md-6">
+                                <h4 class="fw-bold h5 text-success mb-3">Key Takeaways</h4>
+                                <ul class="list-unstyled text-muted space-y-2">
+                                    <li>Foundations of Integrity and Ethics</li>
+                                    <li>Strategies for ethical decision-making</li>
+                                    <li>Building a professional reputation</li>
+                                    <li>Handling ethical conflicts effectively</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h4 class="fw-bold h5 text-success mb-3">Program Features</h4>
+                         <ul class="list-unstyled text-muted space-y-2 mb-5">
+                            <li><strong>Comprehensive Handout:</strong> Receive a PDF with ethical frameworks and Nigerian-specific resources.</li>
+                            <li><strong>Verifiable Digital Certificate:</strong> Issued with a unique ID and online verification for credibility.</li>
+                            <li><strong>Accessibility:</strong> Designed for busy professionals, with online delivery ensuring access from anywhere.</li>
+                        </ul>
+                        <div class="text-center">
+                            <a href="#register" class="btn btn-success btn-lg page-link">Ready to Join? Register Now</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Registration Page Content -->
+        <div id="register" class="page-content d-none">
+             <section class="py-5">
+                <div class="container">
+                    <h2 class="section-title">Register for the Training</h2>
+                    <div class="col-lg-8 mx-auto">
+                        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+                            <p class="text-center text-muted mb-4">Choose your preferred option below. You can secure your spot by paying now, or request a reminder to register later.</p>
+                            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                                <button id="show-payment-form" class="btn btn-success btn-lg">Pay Now & Register</button>
+                                <button id="show-reminder-form" class="btn btn-secondary btn-lg">Request a Reminder</button>
+                            </div>
+
+                            <!-- Registration Form for Payment -->
+                            <form id="registrationForm" class="d-none">
+                                <h3 class="h4 fw-semibold text-center mb-4">Complete Your Registration</h3>
+                                <div class="row g-3">
+                                    <div class="col-md-6"><label class="form-label">Full Name</label><input type="text" id="name" class="form-control" required></div>
+                                    <div class="col-md-6"><label class="form-label">Phone Number</label><input type="tel" id="phone" class="form-control" required></div>
+                                    <div class="col-md-6"><label class="form-label">Email Address</label><input type="email" id="email" class="form-control" required></div>
+                                    <div class="col-md-6"><label class="form-label">State of Residence</label><select id="state" class="form-select" required></select></div>
+                                    <div class="col-md-6"><label class="form-label">Occupation</label><input type="text" id="occupation" class="form-control" required></div>
+                                    <div class="col-md-6"><label class="form-label">Highest Qualification</label><input type="text" id="qualification" class="form-control" required></div>
+                                    <div class="col-12"><label class="form-label">Purpose of Participation</label><select id="purpose" class="form-select" required><option value="">Select Purpose</option><option>Career Upgrade</option><option>Self Development</option><option>Employment</option><option>Supervision/Management</option></select></div>
+                                    <div class="col-12"><label class="form-label">Expectations (Optional)</label><textarea id="expectations" rows="4" class="form-control"></textarea></div>
+                                </div>
+                                <div class="d-grid mt-4"><button type="submit" class="btn btn-success btn-lg">Proceed to Payment</button></div>
+                            </form>
+
+                            <!-- Reminder Form -->
+                            <form id="reminderForm" class="d-none">
+                                <h3 class="h4 fw-semibold text-center mb-4">Get a Reminder</h3>
+                                <div class="row g-3">
+                                     <div class="col-12"><label class="form-label">Full Name</label><input type="text" id="reminder-name" name="user_name" class="form-control" required></div>
+                                     <div class="col-12"><label class="form-label">Email Address</label><input type="email" id="reminder-email" name="user_email" class="form-control" required></div>
+                                </div>
+                                <div class="d-grid mt-4"><button type="submit" class="btn btn-success btn-lg">Submit</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container text-center">
+            <p>&copy; 2025 Youth Advocacy and Support (YAS) Nigeria. All Rights Reserved.</p>
+            <p class="mb-0">Empowering youth for a better tomorrow.</p>
+             <div class="mt-2"><a href="https://yasnigeria.org.ng" target="_blank" class="text-success">Visit Our Main Website</a></div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="success-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-4">
+                <div class="modal-body">
+                    <div class="text-success display-3 mb-3">✓</div>
+                    <h2 id="modal-title" class="modal-title h4">Success!</h2>
+                    <p id="modal-message" class="text-muted mt-2">Your request has been processed.</p>
+                    <button type="button" class="btn btn-success mt-3" data-bs-dismiss="modal">Continue</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Add this after your form container -->
-
-<section id="about-program" class="py-5 bg-light d-none">
-  <div class="container">
-    <h2 class="mb-4 text-center">About the Program</h2>
-    <p class="lead text-center mx-auto" style="max-width: 800px;">
-      <strong>Mastering Workplace Integrity and Ethics for Career Advancement</strong> is a 2-day interactive online course designed to equip young professionals, recent graduates, and mid-career individuals with practical skills to demonstrate integrity and ethical behavior in Nigeria's workplace.
-    </p>
-    <p class="text-center mx-auto" style="max-width: 800px;">
-      The course helps enhance employability, build workplace reputation, and prepare participants for career advancement in sectors like banking, technology, HR, and NGOs.
-    </p>
-    <div class="text-center mt-4">
-      <a href="https://yasnigeria.org.ng" target="_blank" class="btn btn-success btn-lg">
-        Read More About YAS Nigeria
-      </a>
-    </div>
-  </div>
-</section>
-
-  </div>
-
-  <script src="https://js.paystack.co/v1/inline.js"></script>
-  <script src="script.js"></script>
-
-
-<div id="flashscreen" class="d-none" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000000cc; display:flex; align-items:center; justify-content:center; z-index:1000; color:#fff; flex-direction: column;">
-  <div style="font-size:3rem; margin-bottom:1rem;">✅</div>
-  <div style="font-size:1.5rem; margin-bottom:2rem; animation: flash 1.5s infinite alternate;">
-    Payment successful! More details will be shared shortly.
-  </div>
-  <button id="flashscreen-close" style="padding: 0.75rem 2rem; font-size:1.25rem; cursor:pointer;">Continue</button>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-  (function() {
-    emailjs.init("YjKxsPQhrZu1z_aHT");
-  })();
-</script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Paystack & EmailJS -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
 </body>
 </html>

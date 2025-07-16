@@ -1,150 +1,178 @@
-// Populate state dropdown
-const states = [
-  "Select State",
-  "Abia",
-  "Adamawa",
-  "Akwa Ibom",
-  "Anambra",
-  "Bauchi",
-  "Bayelsa",
-  "Benue",
-  "Borno",
-  "Cross River",
-  "Delta",
-  "Ebonyi",
-  "Edo",
-  "Ekiti",
-  "Enugu",
-  "FCT",
-  "Gombe",
-  "Imo",
-  "Jigawa",
-  "Kaduna",
-  "Kano",
-  "Katsina",
-  "Kebbi",
-  "Kogi",
-  "Kwara",
-  "Lagos",
-  "Nasarawa",
-  "Niger",
-  "Ogun",
-  "Ondo",
-  "Osun",
-  "Oyo",
-  "Plateau",
-  "Rivers",
-  "Sokoto",
-  "Taraba",
-  "Yobe",
-  "Zamfara",
-];
+// --- Basic Setup & Page Navigation ---
+document.addEventListener('DOMContentLoaded', function() {
+    const pageLinks = document.querySelectorAll('.page-link');
+    const pages = document.querySelectorAll('.page-content');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-const stateSelect = document.getElementById("state");
-states.forEach((state) => {
-  const option = document.createElement("option");
-  option.text = state;
-  option.value = state;
-  stateSelect.add(option);
+    // Handle Bootstrap Collapse for mobile menu
+    const bsCollapse = mobileMenu ? new bootstrap.Collapse(mobileMenu, {
+        toggle: false
+    }) : null;
+
+    function showPage(pageId) {
+        pages.forEach(page => {
+            page.classList.add('d-none');
+        });
+        const activePage = document.getElementById(pageId);
+        if (activePage) {
+            activePage.classList.remove('d-none');
+        }
+        window.scrollTo(0, 0); // Scroll to top on page change
+        if (bsCollapse && mobileMenu.classList.contains('show')) {
+            bsCollapse.hide();
+        }
+    }
+    
+    pageLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pageId = link.getAttribute('href').substring(1);
+            showPage(pageId);
+        });
+    });
+
+    // Show home page by default
+    showPage('home');
+    
+    // Populate Nigerian States
+    const states = ["Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT - Abuja", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"];
+    const stateSelect = document.getElementById('state');
+    if (stateSelect) {
+        states.forEach(state => {
+            const option = document.createElement('option');
+            option.value = state;
+            option.textContent = state;
+            stateSelect.appendChild(option);
+        });
+    }
 });
 
-function getAmount() {
-  const today = new Date();
-  const deadline = new Date("2025-08-15T23:59:59");
-  return today <= deadline ? 3000000 : 5000000;
+// --- Form Switching Logic ---
+const paymentBtn = document.getElementById('show-payment-form');
+const reminderBtn = document.getElementById('show-reminder-form');
+const paymentForm = document.getElementById('registrationForm');
+const reminderForm = document.getElementById('reminderForm');
+
+if (paymentBtn && reminderBtn) {
+    paymentBtn.addEventListener('click', () => {
+        paymentForm.classList.remove('d-none');
+        reminderForm.classList.add('d-none');
+    });
+
+    reminderBtn.addEventListener('click', () => {
+        reminderForm.classList.remove('d-none');
+        paymentForm.classList.add('d-none');
+    });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  document
-    .getElementById("registrationForm")
-    .addEventListener("submit", function (e) {
-      e.preventDefault();
+// --- EmailJS and Paystack Integration ---
+(function() {
+    // Initialize EmailJS with your Public Key
+    emailjs.init("YjKxsPQhrZu1z_aHT"); 
+})();
 
-      const name = document.getElementById("name").value;
-      const phone = document.getElementById("phone").value;
-      const email = document.getElementById("email").value;
-      const state = document.getElementById("state").value;
-      const occupation = document.getElementById("occupation").value;
-      const qualification = document.getElementById("qualification").value;
-      const purpose = document.getElementById("purpose").value;
-      const amount = getAmount();
-      const reference = "YAS-" + Math.floor(Math.random() * 1000000000 + 1);
-      const payment_date = new Date().toISOString();
+// --- Success Modal Logic ---
+const successModalEl = document.getElementById('success-modal');
+const successModal = successModalEl ? new bootstrap.Modal(successModalEl) : null;
+const modalTitle = document.getElementById('modal-title');
+const modalMessage = document.getElementById('modal-message');
 
-      // Submit to Google Sheet immediately (before payment)
-      const params = new URLSearchParams();
-      params.append("name", name);
-      params.append("phone", phone);
-      params.append("email", email);
-      params.append("state", state);
-      params.append("occupation", occupation);
-      params.append("qualification", qualification);
-      params.append("purpose", purpose);
-      params.append("amount", amount / 100);
-      params.append("reference", reference);
-      params.append("payment_date", payment_date);
+function showModal(title, message) {
+    if(successModal && modalTitle && modalMessage) {
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
+        successModal.show();
+    }
+}
 
-      fetch(
-        "https://script.google.com/macros/s/AKfycbympXhxMJ9VrQD-fjtIVwdO7m5WC3reWJjLXe_y_3FI9r4oCR2yvn3POvQRJHG5VUv2JQ/exec",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: params.toString(),
-        }
-      ).catch((err) => console.error("Data insert failed:", err));
+// --- Form Submission Logic ---
+const registrationForm = document.getElementById("registrationForm");
+if (registrationForm) {
+    registrationForm.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-      const handler = PaystackPop.setup({
-        key: "pk_live_0a90c333370ff5364c0617edaf31fc6cc23062ea",
-        email: email,
-        amount: amount,
-        currency: "NGN",
-        ref: reference,
-        callback: function () {
-          const expectations = document.getElementById("expectations").value;
+        // Gather all form data
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const state = document.getElementById("state").value;
+        const occupation = document.getElementById("occupation").value;
+        const qualification = document.getElementById("qualification").value;
+        const purpose = document.getElementById("purpose").value;
+        const expectations = document.getElementById("expectations").value;
+        const amount = 15000;
 
-          emailjs
-            .send("service_jku9etf", "template_mky3b2b", {
-              name,
-              phone,
-              email,
-              state,
-              occupation,
-              qualification,
-              purpose,
-              expectations,
-              amount: amount / 100,
-              reference,
+        let handler = PaystackPop.setup({
+            key: "pk_live_0a90c333370ff5364c0617edaf31fc6cc23062ea", // Your Paystack Public Key
+            email: email,
+            amount: amount * 100,
+            currency: "NGN",
+            ref: "yas-" + Math.floor(Math.random() * 1000000000 + 1),
+            metadata: {
+                full_name: name,
+                phone_number: phone,
+                occupation: occupation,
+            },
+            callback: function (response) {
+                console.log("Payment successful. Reference: " + response.reference);
+                
+                const paymentDetails = {
+                    name, email, phone, state, occupation, qualification, purpose, expectations,
+                    amount: `₦${amount.toLocaleString()}`, // Format amount with comma
+                    reference: response.reference
+                };
+                sendConfirmationEmail(paymentDetails);
+                registrationForm.reset();
+                showModal(
+                    "Payment Successful!",
+                    "Thank you for registering. More details will be shared with you shortly via email."
+                );
+            },
+            onClose: function () {
+                console.log("Payment window closed.");
+            },
+        });
+        handler.openIframe();
+    });
+}
+
+
+const reminderFormEl = document.getElementById('reminderForm');
+if (reminderFormEl) {
+    reminderFormEl.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Using sendForm because the HTML inputs have `name` attributes.
+        emailjs.sendForm('service_jku9etf', 'template_5458qnz', this)
+            .then(res => {
+                console.log('User confirmation sent successfully.');
+                reminderFormEl.reset();
+                showModal('Reminder Set!', 'Thank you! A confirmation has been sent to your email address.');
             })
-            .then(() => {
-              const flashscreen = document.getElementById("flashscreen");
-              flashscreen.classList.remove("d-none");
-              document
-                .getElementById("about-program")
-                .classList.remove("d-none");
-              document
-                .getElementById("about-program")
-                .scrollIntoView({ behavior: "smooth" });
-              document.getElementById("registrationForm").reset();
-            })
-            .catch((error) => {
-              console.error("EmailJS Error:", error);
+            .catch(err => {
+                console.error('Failed to send user confirmation.', err);
+                showModal('Error', 'Failed to send your confirmation email. Please check the address and try again.');
             });
-        },
-        onClose: function () {
-          alert("Payment window closed.");
-        },
-      });
-
-      handler.openIframe();
     });
+}
 
-  const flashscreenClose = document.getElementById("flashscreen-close");
-  if (flashscreenClose) {
-    flashscreenClose.addEventListener("click", () => {
-      document.getElementById("flashscreen").classList.add("d-none");
-      document.getElementById("registrationForm").reset();
-    });
-  }
-});
+function sendConfirmationEmail(details) {
+    // The parameters here match your EmailJS template fields.
+    const templateParams = {
+        name: details.name,
+        email: details.email,
+        phone: details.phone,
+        state: details.state,
+        occupation: details.occupation,
+        qualification: details.qualification,
+        purpose: details.purpose,
+        expectations: details.expectations,
+        amount: details.amount,
+        reference: details.reference,
+    };
+    
+    // This sends the payment confirmation to the user.
+    emailjs.send("service_jku9etf", "template_mky3b2b", templateParams)
+        .then((res) => console.log("Confirmation email sent.", res.status))
+        .catch((err) => console.log("Failed to send confirmation email.", err));
+}
